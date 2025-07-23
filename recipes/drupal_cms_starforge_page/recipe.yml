@@ -3,7 +3,6 @@ description: Adds some functionality to the Drupal CMS Page with AI Automators a
 type: Drupal CMS
 recipes:
   - drupal_cms_page
-  - drupal_cms_starforge_starter
 install:
   - ai_automators
   - field_widget_actions

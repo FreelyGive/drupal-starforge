@@ -76,6 +76,7 @@ config:
             - drupal_cms_project
             - drupal_cms_search
             - drupal_cms_seo_tools
+            - drupal_cms_starforge_page
         enabled_sources:
           - drupalorg_jsonapi
           - recipes

@@ -100,6 +100,10 @@
             "type": "path",
             "url": "recipes/drupal_cms_starter"
         },
+        "starforge_page": {
+            "type": "path",
+            "url": "recipes/drupal_cms_starforge_page"
+        },
         "starforge_starter": {
             "type": "path",
             "url": "recipes/drupal_cms_starforge_starter"

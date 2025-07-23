@@ -14,25 +14,7 @@ if ddev status | grep -q "web"; then
   fi
   ddev stop
   ddev delete -Oy
-  # If composer.lock and composer.json exist, we remove them.
-  if [ -f "composer.lock" ]; then
-    echo "Removing composer.lock"
-    rm composer.lock
-  fi
-  if [ -f "composer.json" ]; then
-    echo "Removing composer.json"
-    rm composer.json
-  fi
-  # Same with vendor directory.
-  if [ -d "vendor" ]; then
-    echo "Removing vendor directory"
-    rm -rf vendor
-  fi
-  # Same with web directory.
-  if [ -d "web" ]; then
-    echo "Removing web directory"
-    rm -rf web
-  fi
+  rm -r -f vendor $DDEV_DOCROOT composer.* patches.lock.json
 fi
 
 

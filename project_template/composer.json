@@ -35,6 +35,7 @@
         "drupal/drupal_cms_project": "^1.2",
         "drupal/drupal_cms_seo_tools": "^1.2",
         "drupal/drupal_cms_starter": "^1.2",
+        "drupal/drupal_cms_starforge_page": "^1.2",
         "drupal/drupal_cms_starforge_starter": "^1.2",
         "drupal/project_browser": "@beta",
         "drupal/recipe_installer_kit": "^1-alpha6@alpha",

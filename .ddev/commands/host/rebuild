@@ -1,9 +1,23 @@
 #!/usr/bin/env sh
 
-## Description: Destroys and rebuilds the DDEV environment. This will delete and reinstall all dependencies.
-## Usage: rebuild
-## Example: "ddev rebuild"
+## Description: Sets up the playground.
+## Usage: init
+## Example: "ddev init"
 
-ddev drush sql:drop -y
-rm -r -f vendor $DDEV_DOCROOT composer.* patches.lock.json
-ddev restart
+# If ddev is running, we ask that the user really wants to reset the environment.
+if ddev status | grep -q "web"; then
+  echo "Drupal Starforge is currently setup. Do you really want to reset the environment? (y/n)"
+  read -r answer
+  if [ "$answer" != "y" ]; then
+    echo "Aborting re-initialization."
+    exit
+  fi
+  ddev stop
+  ddev delete -Oy
+  rm -r -f vendor $DDEV_DOCROOT composer.* patches.lock.json
+fi
+
+
+ddev start
+ddev composer install
+ddev composer drupal:recipe-unpack
