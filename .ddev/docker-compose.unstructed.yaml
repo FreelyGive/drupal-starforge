@@ -1,0 +1,6 @@
+services:
+  unstructured:
+    container_name: ddev-${DDEV_SITENAME}-unstructured
+    image: downloads.unstructured.io/unstructured-io/unstructured-api:latest
+    ports:
+      - "8000:8000"

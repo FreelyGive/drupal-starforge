@@ -1,0 +1,21 @@
+{
+  "name": "drupal/drupal_cms_starforge_starter",
+  "description": "Adds the providers needed and also sets up vector db and unstructured",
+  "type": "drupal-recipe",
+  "license": "GPL-2.0-or-later",
+  "require": {
+    "drupal/core": "^10.4 || ^11",
+    "drupal/ai": "1.2.x-dev",
+    "drupal/ai_agents": "1.2.x-dev",
+    "drupal/ai_image_alt_text": "^1",
+    "drupal/ai_provider_anthropic": "^1.1",
+    "drupal/ai_provider_openai": "^1.1",
+    "drupal/ai_vdb_provider_postgres": "1.0.x-dev",
+    "drupal/unstructured": "2.0.x-dev",
+    "drupal/search_api": "^1.36"
+  },
+  "conflict": {
+    "drupal/project_browser": "<2-alpha7"
+  },
+  "version": "1.2.x-dev"
+}

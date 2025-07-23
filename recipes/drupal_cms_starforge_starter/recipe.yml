@@ -1,0 +1,10 @@
+name: Drupal CMS Starforge Starter
+type: Site
+description: Applies the foundational Drupal CMS Starforge.
+install:
+  - ai
+  - key
+  - unstructured
+  - ai_vdb_provider_postgres
+  - ai_search
+  - search_api
