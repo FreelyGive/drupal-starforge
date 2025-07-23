@@ -17,19 +17,7 @@ forms:
 recipes:
   required:
     - drupal/drupal_cms_starter
-  optional:
-    'Blog':
-      - drupal/drupal_cms_blog
-    'Case Studies':
-      - drupal/drupal_cms_case_study
-    'Events':
-      - drupal/drupal_cms_events
-    'News':
-      - drupal/drupal_cms_news
-    'Person Profiles':
-      - drupal/drupal_cms_person
-    'Projects':
-      - drupal/drupal_cms_project
+    - drupal/drupal_cms_starforge_starter
 
 # Explicitly provide an empty list of themes -- this prevents the installer from
 # injecting Stark into it.

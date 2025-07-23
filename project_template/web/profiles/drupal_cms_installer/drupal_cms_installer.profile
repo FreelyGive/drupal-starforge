@@ -11,22 +11,7 @@ use Drupal\RecipeKit\Installer\Messenger;
 /**
  * Implements hook_install_tasks().
  */
-function drupal_cms_installer_install_tasks(array &$install_state): array {
-  $tasks = Hooks::installTasks($install_state);
-
-  if (getenv('IS_DDEV_PROJECT')) {
-    Messenger::reject(
-      'All necessary changes to %dir and %file have been made, so you should remove write permissions to them now in order to avoid security risks. If you are unsure how to do so, consult the <a href=":handbook_url">online handbook</a>.',
-    );
-  }
-  return $tasks;
-}
-
-
-/**
- * Implements hook_install_tasks().
- */
-function dxpr_cms_installer_install_tasks(): array {
+function drupal_cms_installer_install_tasks(): array {
   $tasks = Hooks::installTasks();
 
   if (getenv('IS_DDEV_PROJECT')) {
@@ -38,19 +23,13 @@ function dxpr_cms_installer_install_tasks(): array {
   // Ensure our forms are loadable in all situations, even if the installer is
   // not a Composer-managed package.
   \Drupal::service('class_loader')
-    ->addPsr4('Drupal\\dxpr_cms_installer\\', __DIR__ . '/src');
+    ->addPsr4('Drupal\\drupal_cms_installer\\', __DIR__ . '/src');
 
   $additional_tasks = [
-    'dxpr_cms_installer_module_keys' => [
+    'drupal_cms_starforge_installer_module_keys' => [
       'display_name' => t('Enter API keys'),
       'type' => 'form',
       'function' => ConfigureAPIKeysForm::class,
-    ],
-    'dxpr_cms_uninstall_unused_ai_modules' => [
-      // Uninstall the unused AI provider module.
-    ],
-    'dxpr_cms_installer_rebuild_theme' => [
-      // Rebuild theme CSS.
     ],
   ];
 

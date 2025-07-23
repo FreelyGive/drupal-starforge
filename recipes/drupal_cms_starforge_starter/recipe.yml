@@ -8,3 +8,5 @@ install:
   - ai_vdb_provider_postgres
   - ai_search
   - search_api
+  - ai_provider_openai
+  - ai_provider_anthropic

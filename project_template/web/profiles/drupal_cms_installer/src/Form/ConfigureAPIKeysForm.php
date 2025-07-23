@@ -15,7 +15,7 @@ use Drupal\key\Entity\Key;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Defines form for entering DXPR Builder product key and Google Cloud Translation API key.
+ * Defines form for entering Drupal Starforge AI keys.
  */
 class ConfigureAPIKeysForm extends FormBase implements ContainerInjectionInterface {
 
@@ -32,13 +32,6 @@ class ConfigureAPIKeysForm extends FormBase implements ContainerInjectionInterfa
    * @var \Drupal\Core\Extension\InfoParserInterface
    */
   protected $infoParser;
-
-  /**
-   * The form helper.
-   *
-   * @var \Drupal\dxpr_cms_installer\FormHelper
-   */
-  protected $formHelper;
 
   /**
    * The config factory service.
@@ -99,7 +92,7 @@ class ConfigureAPIKeysForm extends FormBase implements ContainerInjectionInterfa
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'dxpr_cms_installer_api_keys_configuration';
+    return 'drupal_cms_starforge_installer_api_keys_configuration';
   }
 
   /**
@@ -108,25 +101,17 @@ class ConfigureAPIKeysForm extends FormBase implements ContainerInjectionInterfa
   public function buildForm(array $form, FormStateInterface $form_state, array &$install_state = NULL) {
     $form['#title'] = $this->t('API Keys Configuration');
 
-    $form['help'] = [
-      '#prefix' => '<p class="cms-installer__subhead">',
-      '#markup' => $this->t('Enter your DXPR Builder product key to unlock premium features and AI capabilities.'),
-      '#suffix' => '</p>',
-    ];
-
     $form['ai_provider'] = [
       '#type' => 'select',
       '#title' => $this->t('Select AI Provider'),
-      '#description' => $this->t('If you want to enable AI features like ai powered alt text generation, select the AI provider you want to use for AI features and fill in the API Key.'),
-      '#default_value' => 'dxpr',
+      '#description' => $this->t('Select the AI provider you want to use for your site. OpenAI or Anthropic are recommended.'),
+      '#default_value' => 'openai',
+      '#required' => TRUE,
       '#options' => [
-        '' => $this->t('No AI'),
-        'dxpr' => $this->t('DXPR AI (Recommended)'),
         'openai' => $this->t('OpenAI'),
         'anthropic' => $this->t('Anthropic'),
       ],
     ];
-
 
     $form['openai_key'] = [
       '#type' => 'password',
@@ -169,72 +154,37 @@ class ConfigureAPIKeysForm extends FormBase implements ContainerInjectionInterfa
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-
     // If the AI provider is set, enable the appropriate modules.
     if ($ai_provider = $form_state->getValue('ai_provider')) {
-      try {
-        // Handle DXPR AI provider differently
-        if ($ai_provider === 'dxpr') {
-          // DXPR uses OpenAI provider with custom host
-          $provider_to_configure = 'openai';
+      // Original logic for other providers
+      // Setup the key for the provider.
+      $key_id = $ai_provider . '_key';
+      $key = Key::create([
+        'id' => $key_id,
+        'label' => ucfirst($ai_provider) . ' API Key',
+        'description' => 'API Key for ' . ucfirst($ai_provider),
+        'key_type' => 'authentication',
+        'key_provider' => 'config',
+      ]);
+      $key->setKeyValue($form_state->getValue($key_id));
+      $key->save();
 
-          // DXPR AI uses the same key as DXPR Builder
-          $key_id = 'dxpr_builder_key';
+      // Add the key to the config.
+      $this->configFactory->getEditable('ai_provider_' . $ai_provider . '.settings')->set('api_key', $key_id)->save();
 
-          // Configure OpenAI provider to use DXPR's AI server
-          $this->configFactory->getEditable('ai_provider_openai.settings')
-            ->set('api_key', $key_id)
-            ->set('host', 'kavya.dxpr.com/v1')
-            ->set('moderation', FALSE)
-            ->save();
-
-          // Set default providers with DXPR's model
-          $this->configFactory->getEditable('ai.settings')->set('default_providers.chat', [
-            'provider_id' => 'openai',
-            'model_id' => 'kavya-m1',
-          ])->set('default_providers.chat_with_image_vision', [
-            'provider_id' => 'openai',
-            'model_id' => 'kavya-m1',
-          ])->set('default_providers.chat_with_complex_json', [
-            'provider_id' => 'openai',
-            'model_id' => 'kavya-m1',
-          ])->save();
-        }
-        else {
-          // Original logic for other providers
-          // Setup the key for the provider.
-          $key_id = $ai_provider . '_key';
-          $key = Key::create([
-            'id' => $key_id,
-            'label' => ucfirst($ai_provider) . ' API Key',
-            'description' => 'API Key for ' . ucfirst($ai_provider),
-            'key_type' => 'authentication',
-            'key_provider' => 'config',
-          ]);
-          $key->setKeyValue($form_state->getValue($key_id));
-          $key->save();
-
-          // Add the key to the config.
-          $this->configFactory->getEditable('ai_provider_' . $ai_provider . '.settings')->set('api_key', $key_id)->save();
-
-          // For OpenAI, ensure we don't override host/moderation settings
-          if ($ai_provider === 'openai') {
-            // Just set the key, leave host and moderation as defaults
-          }
-
-          // Set the default chat and chat_with_image_vision provider.
-          $this->configFactory->getEditable('ai.settings')->set('default_providers.chat', [
-            'provider_id' => $ai_provider,
-            'model_id' => $ai_provider == 'openai' ? 'gpt-4o' : $this->getFirstAiModelId($ai_provider),
-          ])->set('default_providers.chat_with_image_vision', [
-            'provider_id' => $ai_provider,
-            'model_id' => $ai_provider == 'openai' ? 'gpt-4o' : $this->getFirstAiModelId($ai_provider),
-          ])->save();
-        }
+      // For OpenAI, ensure we don't override host/moderation settings
+      if ($ai_provider === 'openai') {
+        // Just set the key, leave host and moderation as defaults
       }
-      catch (\Exception $e) {
-        $this->messenger()->addError($this->t('An error occurred while saving the AI provider key: @error', ['@error' => $e->getMessage()]));
-      }
+
+      // Set the default chat and chat_with_image_vision provider.
+      $this->configFactory->getEditable('ai.settings')->set('default_providers.chat', [
+        'provider_id' => $ai_provider,
+        'model_id' => $ai_provider == 'openai' ? 'gpt-4o' : $this->getFirstAiModelId($ai_provider),
+      ])->set('default_providers.chat_with_image_vision', [
+        'provider_id' => $ai_provider,
+        'model_id' => $ai_provider == 'openai' ? 'gpt-4o' : $this->getFirstAiModelId($ai_provider),
+      ])->save();
     }
   }
 
