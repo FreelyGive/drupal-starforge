@@ -1,0 +1,16 @@
+/.cache
+/.phpunit.result.cache
+/composer.json
+/composer.lock
+/cypress
+node_modules
+patches.json
+patches.lock.json
+/vendor
+/web
+/.editorconfig
+/.gitattributes
+.DS_Store
+eca.model.*.yml
+.specstory/
+.idea/

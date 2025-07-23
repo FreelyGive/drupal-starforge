@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+
+## Description: Sets up the playground.
+## Usage: init
+## Example: "ddev init"
+
+ddev start
+ddev composer install
