@@ -11,5 +11,5 @@
         "drupal/sam": "^1.2",
         "drupal/tagify": "^1.2"
     },
-    "version": "1.2.3"
+    "version": "1.2.x-dev"
 }

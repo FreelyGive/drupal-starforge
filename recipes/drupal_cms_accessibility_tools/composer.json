@@ -8,5 +8,5 @@
         "drupal/drupal_cms_page": "^1.2",
         "drupal/editoria11y": "^2.2"
     },
-    "version": "1.2.0"
+    "version": "1.2.x-dev"
 }

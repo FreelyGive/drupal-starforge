@@ -245,9 +245,3 @@ body.install-page {
     height: 100%;
   }
 }
-
-.cms-installer__language-switcher {
-  position: absolute;
-  right: 0;
-  top: 0;
-}

@@ -1,0 +1,9 @@
+{
+    "name": "drupal/drupal_cms_analytics",
+    "type": "metapackage",
+    "description": "Adds recipes for tracking website traffic.",
+    "require": {
+        "drupal/drupal_cms_google_analytics": "^1.2"
+    },
+    "version": "1.2.x-dev"
+}

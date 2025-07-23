@@ -28,9 +28,17 @@ class InteractiveInstallTest extends InstallerTestBase {
    */
   protected function setUpSettings(): void {
     $assert_session = $this->assertSession();
+    $assert_session->buttonExists('Skip this step');
 
-    // We should be asked for the site name, with a default value in place for
-    // the truly lazy.
+    // Choose all the add-ons!
+    $page = $this->getSession()->getPage();
+    $optional_recipes = $page->findAll('css', 'input[name^="add_ons["]');
+    $this->assertNotEmpty($optional_recipes);
+    array_walk($optional_recipes, fn ($checkbox) => $checkbox->check());
+    $page->pressButton('Next');
+
+    // Now we should be asked for the site name, with a default value in place
+    // for the truly lazy.
     $assert_session->pageTextContains('Give your site a name');
     $site_name_field = $assert_session->fieldExists('Site name');
     $this->assertTrue($site_name_field->hasAttribute('required'));

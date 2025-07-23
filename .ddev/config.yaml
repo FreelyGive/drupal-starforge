@@ -25,7 +25,7 @@ hooks:
     # option is needed to ensure the Cypress binary is actually downloaded;
     # see the warning about Node.js Snap for Linux at
     # https://docs.cypress.io/guides/getting-started/installing-cypress.
-#    - exec: 'test -d node_modules || npm clean-install --foreground-scripts'
+    # - exec: 'test -d node_modules || npm clean-install --foreground-scripts'
 web_environment:
   # If CANARY is set, Composer will install dev branches of all dependencies (be sure to
   # run `ddev rebuild` if you change this).

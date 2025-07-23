@@ -10,5 +10,5 @@
         "drupal/login_emailusername": "^3",
         "drupal/token": "^1"
     },
-    "version": "1.2.0"
+    "version": "1.2.x-dev"
 }

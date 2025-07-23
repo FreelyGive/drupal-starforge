@@ -11,5 +11,5 @@
         "drupal/klaro": "^3",
         "drupal/menu_link_attributes": "^1.5"
     },
-    "version": "1.2.0"
+    "version": "1.2.x-dev"
 }

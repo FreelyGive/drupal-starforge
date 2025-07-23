@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Site\Settings;
+use Drupal\drupal_cms_installer\Form\ConfigureAPIKeysForm;
 use Drupal\RecipeKit\Installer\Hooks;
 use Drupal\RecipeKit\Installer\Messenger;
 
@@ -21,6 +22,41 @@ function drupal_cms_installer_install_tasks(array &$install_state): array {
   return $tasks;
 }
 
+
+/**
+ * Implements hook_install_tasks().
+ */
+function dxpr_cms_installer_install_tasks(): array {
+  $tasks = Hooks::installTasks();
+
+  if (getenv('IS_DDEV_PROJECT')) {
+    Messenger::reject(
+      'All necessary changes to %dir and %file have been made, so you should remove write permissions to them now in order to avoid security risks. If you are unsure how to do so, consult the <a href=":handbook_url">online handbook</a>.',
+    );
+  }
+
+  // Ensure our forms are loadable in all situations, even if the installer is
+  // not a Composer-managed package.
+  \Drupal::service('class_loader')
+    ->addPsr4('Drupal\\dxpr_cms_installer\\', __DIR__ . '/src');
+
+  $additional_tasks = [
+    'dxpr_cms_installer_module_keys' => [
+      'display_name' => t('Enter API keys'),
+      'type' => 'form',
+      'function' => ConfigureAPIKeysForm::class,
+    ],
+    'dxpr_cms_uninstall_unused_ai_modules' => [
+      // Uninstall the unused AI provider module.
+    ],
+    'dxpr_cms_installer_rebuild_theme' => [
+      // Rebuild theme CSS.
+    ],
+  ];
+
+  return array_merge($tasks, $additional_tasks);
+}
+
 /**
  * Implements hook_install_tasks_alter().
  */
@@ -34,7 +70,7 @@ function drupal_cms_installer_install_tasks_alter(array &$tasks, array $install_
   $langcode = $GLOBALS['install_state']['parameters']['langcode'];
   $settings = Settings::getAll();
   // @see install_profile_modules()
-  $settings["locale_custom_strings_$langcode"]['']['Installing @drupal'] = (string) t('Setting up your site');
+  $settings["locale_custom_strings_$langcode"]['']['Installing @drupal'] = 'Setting up your site';
   new Settings($settings);
 }
 

@@ -7,5 +7,5 @@
         "drupal/core": "^10.4 || ^11",
         "drupal/drupal_cms_privacy_basic": "^1.2"
     },
-    "version": "1.2.0"
+    "version": "1.2.x-dev"
 }

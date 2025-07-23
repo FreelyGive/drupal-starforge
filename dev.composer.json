@@ -1,0 +1,141 @@
+{
+    "_info": [
+        "This file contains internal development dependencies and patches for Drupal CMS.",
+        "Do NOT use it to build a real site!"
+    ],
+    "repositories": {
+        "accessibility_tools": {
+            "type": "path",
+            "url": "recipes/drupal_cms_accessibility_tools"
+        },
+        "admin_ui": {
+            "type": "path",
+            "url": "recipes/drupal_cms_admin_ui"
+        },
+        "ai": {
+            "type": "path",
+            "url": "recipes/drupal_cms_ai"
+        },
+        "analytics": {
+            "type": "path",
+            "url": "recipes/drupal_cms_analytics"
+        },
+        "anti_spam": {
+            "type": "path",
+            "url": "recipes/drupal_cms_anti_spam"
+        },
+        "authentication": {
+            "type": "path",
+            "url": "recipes/drupal_cms_authentication"
+        },
+        "blog": {
+            "type": "path",
+            "url": "recipes/drupal_cms_blog"
+        },
+        "case_study": {
+            "type": "path",
+            "url": "recipes/drupal_cms_case_study"
+        },
+        "content_type_base": {
+            "type": "path",
+            "url": "recipes/drupal_cms_content_type_base"
+        },
+        "events": {
+            "type": "path",
+            "url": "recipes/drupal_cms_events"
+        },
+        "forms": {
+            "type": "path",
+            "url": "recipes/drupal_cms_forms"
+        },
+        "google_analytics": {
+            "type": "path",
+            "url": "recipes/drupal_cms_google_analytics"
+        },
+        "image": {
+            "type": "path",
+            "url": "recipes/drupal_cms_image"
+        },
+        "news": {
+            "type": "path",
+            "url": "recipes/drupal_cms_news"
+        },
+        "olivero": {
+            "type": "path",
+            "url": "drupal_cms_olivero"
+        },
+        "page": {
+            "type": "path",
+            "url": "recipes/drupal_cms_page"
+        },
+        "person": {
+            "type": "path",
+            "url": "recipes/drupal_cms_person"
+        },
+        "privacy_basic": {
+            "type": "path",
+            "url": "recipes/drupal_cms_privacy_basic"
+        },
+        "project": {
+            "type": "path",
+            "url": "recipes/drupal_cms_project"
+        },
+        "remote_video": {
+            "type": "path",
+            "url": "recipes/drupal_cms_remote_video"
+        },
+        "search": {
+            "type": "path",
+            "url": "recipes/drupal_cms_search"
+        },
+        "seo_basic": {
+            "type": "path",
+            "url": "recipes/drupal_cms_seo_basic"
+        },
+        "seo_tools": {
+            "type": "path",
+            "url": "recipes/drupal_cms_seo_tools"
+        },
+        "starter": {
+            "type": "path",
+            "url": "recipes/drupal_cms_starter"
+        }
+    },
+    "require-dev": {
+        "cweagans/composer-patches": "^2",
+        "drupal/core-dev": "^11.2@beta",
+        "drupal/default_content": "^2",
+        "drupal/experience_builder": "0.x-dev@dev"
+    },
+    "autoload-dev": {
+        "files": [
+            "recipes/drupal_cms_content_type_base/tests/src/ContentModelTestTrait.php"
+        ]
+    },
+    "scripts": {
+        "post-update-cmd": [
+            "@putenv XB_UI_PATH=web/modules/contrib/experience_builder/ui",
+            "npm --prefix $XB_UI_PATH install",
+            "npm --prefix $XB_UI_PATH run build"
+        ]
+    },
+    "config": {
+        "allow-plugins": {
+            "cweagans/composer-patches": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "phpstan/extension-installer": true,
+            "tbachert/spi": true
+        }
+    },
+    "extra": {
+        "patches": {
+            "drupal/core": {
+                "#3481164: Announcements Feed breaks `test-site.php install`": "https://www.drupal.org/files/issues/2024-10-16/3481164.patch"
+            },
+            "drupal/default_content": {
+                "#3160146: Add a Normalizer and Denormalizer to support Layout Builder": "https://git.drupalcode.org/project/default_content/-/merge_requests/15.diff"
+            }
+        }
+    },
+    "minimum-stability": "dev"
+}
