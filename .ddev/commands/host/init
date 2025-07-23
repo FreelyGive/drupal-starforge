@@ -4,6 +4,38 @@
 ## Usage: init
 ## Example: "ddev init"
 
+# If ddev is running, we ask that the user really wants to reset the environment.
+if ddev status | grep -q "web"; then
+  echo "Drupal Starforge is currently setup. Do you really want to reset the environment? (y/n)"
+  read -r answer
+  if [ "$answer" != "y" ]; then
+    echo "Aborting re-initialization."
+    exit
+  fi
+  ddev stop
+  ddev delete -Oy
+  # If composer.lock and composer.json exist, we remove them.
+  if [ -f "composer.lock" ]; then
+    echo "Removing composer.lock"
+    rm composer.lock
+  fi
+  if [ -f "composer.json" ]; then
+    echo "Removing composer.json"
+    rm composer.json
+  fi
+  # Same with vendor directory.
+  if [ -d "vendor" ]; then
+    echo "Removing vendor directory"
+    rm -rf vendor
+  fi
+  # Same with web directory.
+  if [ -d "web" ]; then
+    echo "Removing web directory"
+    rm -rf web
+  fi
+fi
+
+
 ddev start
 ddev composer install
 ddev composer drupal:recipe-unpack

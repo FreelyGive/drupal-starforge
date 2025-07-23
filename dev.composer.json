@@ -99,6 +99,10 @@
         "starter": {
             "type": "path",
             "url": "recipes/drupal_cms_starter"
+        },
+        "starforge_starter": {
+            "type": "path",
+            "url": "recipes/drupal_cms_starforge_starter"
         }
     },
     "require-dev": {
