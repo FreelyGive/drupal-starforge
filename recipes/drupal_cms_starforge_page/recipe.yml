@@ -1,0 +1,14 @@
+name: Drupal CMS Starforge Page
+description: Adds some functionality to the Drupal CMS Page with AI Automators and Field Widget Actions.
+type: Drupal CMS
+recipes:
+  - drupal_cms_page
+  - drupal_cms_starforge_starter
+install:
+  - ai_automators
+  - field_widget_actions
+  - token
+config:
+  import:
+    ai_automators: '*'
+    field_widget_actions: '*'

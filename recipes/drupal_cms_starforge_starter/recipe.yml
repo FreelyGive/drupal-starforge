@@ -10,3 +10,8 @@ install:
   - search_api
   - ai_provider_openai
   - ai_provider_anthropic
+  - ai_api_explorer
+  - ai_logging
+config:
+  import:
+    ai_logging: '*'

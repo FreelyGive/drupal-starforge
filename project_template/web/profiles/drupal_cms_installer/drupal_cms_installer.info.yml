@@ -18,6 +18,7 @@ recipes:
   required:
     - drupal/drupal_cms_starter
     - drupal/drupal_cms_starforge_starter
+    # Add some extra that we can build on.
 
 # Explicitly provide an empty list of themes -- this prevents the installer from
 # injecting Stark into it.

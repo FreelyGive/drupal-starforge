@@ -1,0 +1,5 @@
+host: pgvector
+port: 5432
+username: db
+password: postgres_vector_password
+default_database: db

@@ -1,0 +1,13 @@
+{
+  "name": "drupal/drupal_cms_starforge_page",
+  "description": "Adds some functionality to the Drupal CMS Page with AI Automators and Field Widget Actions.",
+  "type": "drupal-recipe",
+  "license": [
+    "GPL-2.0-or-later"
+  ],
+  "require": {
+    "drupal/core": "^10.4 || ^11",
+    "drupal/token": "^1"
+  },
+  "version": "1.2.x-dev"
+}
