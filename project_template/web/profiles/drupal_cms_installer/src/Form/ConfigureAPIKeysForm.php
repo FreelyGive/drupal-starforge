@@ -172,19 +172,22 @@ class ConfigureAPIKeysForm extends FormBase implements ContainerInjectionInterfa
       // Add the key to the config.
       $this->configFactory->getEditable('ai_provider_' . $ai_provider . '.settings')->set('api_key', $key_id)->save();
 
-      // For OpenAI, ensure we don't override host/moderation settings
-      if ($ai_provider === 'openai') {
-        // Just set the key, leave host and moderation as defaults
-      }
+      $provider = $this->aiProviderPluginManager->createInstance($ai_provider);
 
-      // Set the default chat and chat_with_image_vision provider.
-      $this->configFactory->getEditable('ai.settings')->set('default_providers.chat', [
-        'provider_id' => $ai_provider,
-        'model_id' => $ai_provider == 'openai' ? 'gpt-4o' : $this->getFirstAiModelId($ai_provider),
-      ])->set('default_providers.chat_with_image_vision', [
-        'provider_id' => $ai_provider,
-        'model_id' => $ai_provider == 'openai' ? 'gpt-4o' : $this->getFirstAiModelId($ai_provider),
-      ])->save();
+      // Check if getSetupData() method exists and is callable.
+      if (is_callable([$provider, 'getSetupData'])) {
+        // Fetch setup data.
+        $setup_data = $provider->getSetupData();
+
+        // Ensure the setup data is valid.
+        if (!empty($setup_data) && is_array($setup_data) && !empty($setup_data['default_models']) && is_array($setup_data['default_models'])) {
+          // Loop through and set default models for each operation type.
+          foreach ($setup_data['default_models'] as $op_type => $model_id) {
+            $this->aiProviderPluginManager->defaultIfNone($op_type, $ai_provider, $model_id);
+          }
+        }
+      }
+      $this->aiProviderPluginManager->clearCachedDefinitions();
     }
   }
 

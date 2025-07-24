@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
 ## Description: Sets up the playground.
-## Usage: init
-## Example: "ddev init"
+## Usage: rebuild
+## Example: "ddev rebuild"
 
 # If ddev is running, we ask that the user really wants to reset the environment.
 if ddev status | grep -q "web"; then
