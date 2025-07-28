@@ -57,3 +57,4 @@ webimage_extra_packages:
   # Additional browsers for Cypress to test against.
   - chromium
   - firefox-esr
+  - ffmpeg

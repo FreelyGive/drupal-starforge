@@ -1,8 +1,14 @@
-# Drupal CMS
+# Drupal Starforge
 
-Drupal CMS is a fast-moving open source product that enables site builders to easily create new Drupal sites and extend them with smart defaults, all using their browser.
+Drupal Starforge is a playground for experimenting with Drupal CMS and AI technologies. It is designed to help developers and enthusiasts explore the capabilities of Drupal CMS in conjunction with AI, providing a platform for innovation and creativity.
+
+The idea is that anyone can use this project to quickly set up a Drupal CMS instance with AI capabilities, to try out prototype and test new features.
+
+Its also a playground for developers to push their recipes of AI integration with Drupal CMS, and to share their findings with the community and get feedback. Any good ideas that come out of this project will be considered for inclusion as a MR in the [drupal_cms project](https://www.drupal.org/project/drupal_cms).
 
 ## Getting started
+
+This is completely based on you having [DDEV](https://ddev.com) installed. Later a Devpanel starter will also be available, but for now, you can use DDEV to run Drupal CMS locally.
 
 If you want to use [DDEV](https://ddev.com) to run Drupal CMS locally, follow these instructions:
 
@@ -10,36 +16,40 @@ If you want to use [DDEV](https://ddev.com) to run Drupal CMS locally, follow th
 2. Open the command line and `cd` to the root directory of this project
 3. Run the following commands:
 ```shell
-ddev config --project-type=drupal11 --docroot=web
-ddev start
-ddev composer install
-ddev composer drupal:recipe-unpack
+ddev rebuild
 ddev launch
 ```
 
-Drupal CMS has the same system requirements as Drupal core, so you can use your preferred setup to run it locally. [See the Drupal User Guide for more information](https://www.drupal.org/docs/user_guide/en/installation-chapter.html) on how to set up Drupal.
+Note that ddev rebuild will at any time reinstall the system, so only run it once or when you want to reset the system.
 
-### Installation options
+**NOTE: Its very important currently that you install the website via the browser, since the complex provider installer is only available via the web interface. So after running `ddev launch`, open your browser and go to the URL provided by DDEV, and follow the instructions to install Drupal CMS. Do not use `ddev drush si` to install the site, as it will not work properly.**
 
-The Drupal CMS installer offers a list of features preconfigured with smart defaults. You will be able to customize whatever you choose, and add additional features, once you are logged in.
+### Extra services
 
-After the installer is complete, you will land on the dashboard.
+This project comes with a few extra services and applications that the normal Drupal CMS does not have. These are:
 
-## Documentation
+1. **PG Vector**: A PostgreSQL database for vector similarity search, useful for AI applications. The provider module is already installed, enabled and setup.
+2. **Unstructured.io**: A service for managing unstructured data, such as documents and images, which can be used in AI applications. The provider module is already installed, enabled and setup.
+3. **ffmpeg**: A multimedia framework for handling video and audio files, useful for AI applications that require media processing.
 
-Coming soon ... [We're working on Drupal CMS specific documentation](https://www.drupal.org/project/drupal_cms/issues/3454527).
+### Extra base recipe:
 
-In the meantime, learn more about managing a Drupal-based application in the [Drupal User Guide](https://www.drupal.org/docs/user_guide/en/index.html).
+The recipe `drupal_cms_starforge_starter` will be run automatically on installation and require you to setup the AI provider of your choice. This recipe will install the necessary modules and configuration to get you started with AI integration in Drupal CMS. This means that any recipe you create could use this as a base recipe, so you do not have to repeat installation of the AI providers.
 
 ## Contributing
 
-Drupal CMS is developed in the open on [Drupal.org](https://www.drupal.org). We are grateful to the community for reporting bugs and contributing fixes and improvements.
+Any contributions as features should be recipes under the `recipes` directory. Each recipe should be a self-contained feature that can be enabled or disabled independently. See for instance the drupal_cms_starforge_recipes module for an example of how to structure a recipe.
 
-[Report issues in the queue](https://drupal.org/node/add/project-issue/drupal_cms), providing as much detail as you can. You can also join the #drupal-cms-support channel in the [Drupal Slack community](https://www.drupal.org/slack).
+If you want to contribute to the project, please follow these steps:
+1. Fork the repository on GitHub.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them with a clear message.
+4. Push your changes to your forked repository.
+5. Create a pull request against the main repository.
 
-Drupal CMS has adopted a [code of conduct](https://www.drupal.org/dcoc) that we expect all participants to adhere to.
+If you just want your recipe to be included via the Project Browser, then open the file `recipes/drupal_cms_starter/recipe.yml` and under `config.actions.project_browser.admin_settings.simpleConfigUpdate.allowed_projects.recipes` add your recipe name. This will make it available in the Project Browser for anyone to install.
 
-To contribute to Drupal CMS development, see the [drupal_cms project](https://www.drupal.org/project/drupal_cms).
+If you want it to install automatically then instead add it in the same file, directly under `recipes` as a new entry.
 
 ## License
 

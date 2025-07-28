@@ -17,7 +17,6 @@ if ddev status | grep -q "web"; then
   rm -r -f vendor $DDEV_DOCROOT composer.* patches.lock.json
 fi
 
-
 ddev start
 ddev composer install
 ddev composer drupal:recipe-unpack
