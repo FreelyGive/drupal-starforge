@@ -2,7 +2,7 @@
 set -eu -o pipefail
 cd $APP_ROOT
 
-test -f composer.lock || (generate-composer-json > composer.json && composer install)
+test -f composer.lock || (.ddev/homeadditions/bin/generate-composer-json > composer.json && composer install)
 
 ln -s -f $(realpath -s --relative-to=web/profiles project_template/web/profiles/drupal_cms_installer) web/profiles
 
