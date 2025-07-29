@@ -46,7 +46,7 @@ if [ -f .devpanel/composer_extra.sh ]; then
   time source .devpanel/composer_extra.sh
   echo
 fi
-time composer -n update --no-dev --no-progress
+time composer -n update --no-progress
 time composer drupal:recipe-unpack
 
 #== Create the private files directory.
