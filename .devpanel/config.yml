@@ -9,7 +9,7 @@ hooks:
         # echo "Hello World"
         # date >> test.txt
         cmd: |-
-          composer -n install --no-dev >> /tmp/composer_main.txt
+          composer -n install /tmp/composer_main.txt
       - branch: "develop"
         # matches release on "develop" branch only
         # run commands or scripts from cmd below... eg:
