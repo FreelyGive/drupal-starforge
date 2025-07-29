@@ -120,13 +120,6 @@
             "recipes/drupal_cms_content_type_base/tests/src/ContentModelTestTrait.php"
         ]
     },
-    "scripts": {
-        "post-update-cmd": [
-            "@putenv XB_UI_PATH=web/modules/contrib/experience_builder/ui",
-            "npm --prefix $XB_UI_PATH install",
-            "npm --prefix $XB_UI_PATH run build"
-        ]
-    },
     "config": {
         "allow-plugins": {
             "cweagans/composer-patches": true,
