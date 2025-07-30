@@ -1,4 +1,11 @@
 if [ -n "${DP_AI_VIRTUAL_KEY:-}" ]; then
+  #== Make sure the packages exists
+  composer require 'drupal/ai_agents:^1.2.x-dev'
+  composer require 'drupal/ai_provider_litellm:^1.1@beta'
+  composer require 'drupal/search_api:^1.38'
+  composer require 'league/commonmark:^2.4'
+
+
   time drush pm:en -y ai ai_provider_litellm ai_agents
   echo
   drush -n key-save litellm_api_key --label="LiteLLM API key" --key-provider=env --key-provider-settings='{
