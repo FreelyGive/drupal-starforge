@@ -55,3 +55,7 @@ else
   echo -e "> PostgreSQL is not installed. Skipping pgvector export."
 fi
 
+# Set the variable for the image permanently.
+echo -e "> Set the variable for the image permanently."
+IMAGE_TAG="marcus_johansson/drupal-starforge:1.0.x"
+
