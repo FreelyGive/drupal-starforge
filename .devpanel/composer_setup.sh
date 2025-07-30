@@ -6,6 +6,14 @@ test -f composer.lock || (.ddev/homeadditions/bin/generate-composer-json > compo
 
 ln -s -f $(realpath -s --relative-to=web/profiles project_template/web/profiles/drupal_cms_installer) web/profiles
 
+# Scaffold settings.php.
+composer config -jm extra.drupal-scaffold.file-mapping '{
+    "[web-root]/sites/default/settings.php": {
+        "path": "web/core/assets/scaffold/files/default.settings.php",
+        "overwrite": false
+    }
+}'
+
 # Patch settings.php.
 composer config scripts.post-drupal-scaffold-cmd \
     'cd web/sites/default && test -z "$(grep '\''include \$devpanel_settings;'\'' settings.php)" && patch -Np1 -r /dev/null < $APP_ROOT/.devpanel/drupal-settings.patch || :'
