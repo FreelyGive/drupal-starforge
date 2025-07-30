@@ -53,15 +53,4 @@ if [ -n "${DP_AI_VIRTUAL_KEY:-}" ]; then
 
   # Flush the cache.
   drush cr
-
-  # Apply the localgov_ai recipe.
-  drush recipe ../recipes/localgov_ai
-
-  # Do this 16 times (80 contents).
-  for i in {1..16}; do
-    # Wait for 5 seconds to not run into rate limits.
-    sleep 5
-    # Start indexing.
-    drush sapi-i content_for_ai --limit=5
-  done
 fi
