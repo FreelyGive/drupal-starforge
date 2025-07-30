@@ -2,7 +2,7 @@ name: Docker build and push template
 on:
   push:
     branches:
-      - "main"
+      - "1.0.x"
       - test/*
   workflow_dispatch:
 jobs:
