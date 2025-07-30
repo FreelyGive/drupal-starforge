@@ -56,3 +56,7 @@ If you want it to install automatically then instead add it in the same file, di
 Drupal CMS and all derivative works are licensed under the [GNU General Public License, version 2 or later](http://www.gnu.org/licenses/old-licenses/gpl-2.0.html).
 
 Learn about the [Drupal trademark and logo policy here](https://www.drupal.com/trademark).
+
+## DrupalForge
+
+This project automatically will push to DrupalForge when something is merged into the 1.0.x branch. Since it needs to build a container, count with a minimum of 10 minutes before the updates are available on DrupalForge.
