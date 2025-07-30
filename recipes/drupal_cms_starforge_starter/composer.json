@@ -10,7 +10,7 @@
     "drupal/ai_image_alt_text": "^1",
     "drupal/ai_provider_anthropic": "^1.1",
     "drupal/ai_provider_openai": "^1.1",
-    "drupal/ai_vdb_provider_postgres": "1.0.x-dev",
+    "drupal/ai_vdb_provider_postgres": "^1.0.0-alpha2",
     "drupal/unstructured": "2.0.x-dev",
     "drupal/search_api": "^1.36"
   },
